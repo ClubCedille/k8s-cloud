@@ -1,0 +1,110 @@
+name: Deploy Gatus to Cloud Run
+
+on:
+  # Trigger when config.yaml is updated
+  push:
+    branches: [main]
+    paths:
+      - 'config.yaml'
+      - 'Dockerfile'
+      - '.github/workflows/deploy-gatus.yml'
+  
+  # Manual trigger
+  workflow_dispatch:
+  
+  # Triggered by endpoint discovery workflow
+  repository_dispatch:
+    types: [config-updated]
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  REGION: us-central1  # Change to your preferred region
+  SERVICE_NAME: gatus-monitoring
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      id-token: write  # Required for Workload Identity Federation
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+      
+      - name: Configure Docker for Artifact Registry
+        run: |
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+      
+      - name: Build and push Docker image
+        run: |
+          IMAGE_NAME="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/gatus/gatus:${{ github.sha }}"
+          IMAGE_LATEST="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/gatus/gatus:latest"
+          
+          docker build -t $IMAGE_NAME -t $IMAGE_LATEST .
+          docker push $IMAGE_NAME
+          docker push $IMAGE_LATEST
+          
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+      
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
+            --image=${{ env.IMAGE_NAME }} \
+            --platform=managed \
+            --region=${{ env.REGION }} \
+            --allow-unauthenticated \
+            --memory=512Mi \
+            --cpu=1 \
+            --min-instances=0 \
+            --max-instances=2 \
+            --timeout=300 \
+            --port=8080 \
+            --set-env-vars="TZ=America/Montreal"
+      
+      - name: Get service URL
+        id: get_url
+        run: |
+          SERVICE_URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} \
+            --region=${{ env.REGION }} \
+            --format='value(status.url)')
+          echo "url=$SERVICE_URL" >> $GITHUB_OUTPUT
+          echo "SERVICE_URL=$SERVICE_URL" >> $GITHUB_ENV
+      
+      - name: Verify deployment
+        run: |
+          echo "Waiting for service to be ready..."
+          sleep 10
+          
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.SERVICE_URL }})
+          if [ "$RESPONSE" -eq 200 ]; then
+            echo "Service is responding correctly"
+          else
+            echo "Service returned HTTP $RESPONSE"
+            exit 1
+          fi
+      
+      - name: Deployment summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Gatus successfully deployed to Cloud Run**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Service URL**: ${{ steps.get_url.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Region**: ${{ env.REGION }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Image**: \`${{ env.IMAGE_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Access Dashboard" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "[Open Gatus Dashboard](${{ steps.get_url.outputs.url }})" >> $GITHUB_STEP_SUMMARY
