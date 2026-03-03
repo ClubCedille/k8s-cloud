@@ -16,7 +16,7 @@ on:
 
 jobs:
   discover-and-update:
-    runs-on: ubuntu-latest
+    runs-on: nixos-latest
     
     steps:
       - name: Checkout repository
@@ -29,8 +29,8 @@ jobs:
         with:
           version: 'v1.28.0'
       
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq omnictl
+      - name: Install dependencies
+        run: nix shell nixpkgs#jq nixpkgs#omnictl nixpkgs#kubectl
       
       - name: Run endpoint discovery
         run: |
