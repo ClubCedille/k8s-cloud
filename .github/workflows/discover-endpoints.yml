@@ -32,23 +32,6 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
       
-      - name: Configure kubeconfig for all clusters
-        run: |
-          mkdir -p ~/.kube
-          
-          # Decode and merge kubeconfigs from secrets
-          echo "${{ secrets.KUBECONFIG_SHARED }}" | base64 -d > ~/.kube/config-shared
-          echo "${{ secrets.KUBECONFIG_MANAGEMENT }}" | base64 -d > ~/.kube/config-management
-          echo "${{ secrets.KUBECONFIG_PRODUCTION }}" | base64 -d > ~/.kube/config-production
-          
-          # Merge all kubeconfigs
-          KUBECONFIG=~/.kube/config-shared:~/.kube/config-management:~/.kube/config-production \
-            kubectl config view --flatten > ~/.kube/config
-          
-          # Verify contexts are available
-          echo "Available contexts:"
-          kubectl config get-contexts
-      
       - name: Run endpoint discovery
         run: |
           chmod +x scripts/generate-gatus-config.sh
