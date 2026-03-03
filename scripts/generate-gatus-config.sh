@@ -20,6 +20,8 @@ echo "🔍 Discovering endpoints across clusters..."
 
 # Discover endpoints from all clusters
 for ctx in "${CONTEXTS[@]}"; do
+  echo "Fetching kubeconfig for ${ctx}"
+  omnictl kubeconfig --cluster ${ctx} --grant-type=authcode-keyboard
   echo "📡 Scanning cluster: $ctx"
   
   # Check if context exists
@@ -60,15 +62,6 @@ storage:
 # Web UI configuration
 web:
   port: 8080
-
-# Alerting (optional - configure as needed)
-# alerting:
-#   slack:
-#     webhook-url: "${SLACK_WEBHOOK_URL}"
-#     default-alert:
-#       enabled: true
-#       failure-threshold: 3
-#       success-threshold: 2
 
 # Endpoints to monitor
 endpoints:
