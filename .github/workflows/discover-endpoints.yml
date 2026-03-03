@@ -30,7 +30,7 @@ jobs:
           version: 'v1.28.0'
       
       - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
+        run: sudo apt-get update && sudo apt-get install -y jq omnictl
       
       - name: Run endpoint discovery
         run: |
