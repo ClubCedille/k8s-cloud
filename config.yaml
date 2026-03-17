@@ -25,9 +25,9 @@ endpoints:
         failure-threshold: 3
         success-threshold: 2
 
-  - name: argocd-mgmtv2-cedille-club
+  - name: argocd-etsmtl-club
     group: production
-    url: "https://argocd.mgmtv2.cedille.club/"
+    url: "https://argocd.etsmtl.club/"
     interval: 5m
     conditions:
       - "[STATUS] == 200"
@@ -236,6 +236,19 @@ endpoints:
   - name: crabe-etsmtl-ca
     group: production
     url: "https://crabe.etsmtl.ca/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: ctfd-etsmtl-club
+    group: production
+    url: "https://ctfd.etsmtl.club/"
     interval: 5m
     conditions:
       - "[STATUS] == 200"
