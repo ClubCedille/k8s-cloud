@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 # Configuration
@@ -20,22 +20,18 @@ echo "🔍 Discovering endpoints across clusters..."
 
 # Discover endpoints from all clusters
 for ctx in "${CONTEXTS[@]}"; do
-  echo "Fetching kubeconfig for ${ctx}"
-  omnictl kubeconfig --cluster ${ctx} --grant-type=authcode-keyboard
-  echo "📡 Scanning cluster: $ctx"
-  
   # Check if context exists
   if ! kubectl config get-contexts "$ctx" &>/dev/null; then
     echo "Warning: Context $ctx not found, skipping..."
     continue
   fi
-  
+
   # Get HTTPProxy endpoints
   kubectl --context="$ctx" get httpproxies.projectcontour.io -A -o json 2>/dev/null \
     | jq -r '.items[]
     | select(.spec.ingressClassName == null or .spec.ingressClassName == "contour")
     | .spec.virtualhost.fqdn' >> "$TEMP_ENDPOINTS" || true
-  
+
   # Get Ingress endpoints
   kubectl --context="$ctx" get ingress -A -o json 2>/dev/null \
     | jq -r '.items[]
@@ -71,10 +67,10 @@ EOF
 while IFS= read -r endpoint; do
   # Skip empty lines
   [[ -z "$endpoint" ]] && continue
-  
+
   # Sanitize endpoint name (replace dots and hyphens for Gatus compatibility)
   ENDPOINT_NAME=$(echo "$endpoint" | sed 's/\./-/g')
-  
+
   # Determine group based on domain patterns
   GROUP="production"
   if [[ "$endpoint" == *"staging"* ]] || [[ "$endpoint" == *"dev"* ]]; then
@@ -82,7 +78,7 @@ while IFS= read -r endpoint; do
   elif [[ "$endpoint" == *"internal"* ]] || [[ "$endpoint" == *"admin"* ]]; then
     GROUP="internal"
   fi
-  
+
   # Add endpoint configuration
   cat >> "$OUTPUT_FILE" <<EOF
   - name: ${ENDPOINT_NAME}
