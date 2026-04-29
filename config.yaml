@@ -12,6 +12,19 @@ web:
 
 # Endpoints to monitor
 endpoints:
+  - name: acets-prodv2-cedille-club
+    group: production
+    url: "https://acets.prodv2.cedille.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
   - name: argocd-etsmtl-club
     group: production
     url: "https://argocd.etsmtl.club/"
@@ -337,6 +350,19 @@ endpoints:
         failure-threshold: 3
         success-threshold: 2
 
+  - name: gatus-sandbox-cedille-club
+    group: production
+    url: "https://gatus.sandbox.cedille.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
   - name: git-etsmtl-club
     group: production
     url: "https://git.etsmtl.club/"
@@ -392,6 +418,32 @@ endpoints:
   - name: helm-byzantium-etsmtl-club
     group: production
     url: "https://helm.byzantium.etsmtl.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: httpbin-sh4ytan-sandbox-cedille-club
+    group: production
+    url: "https://httpbin-sh4ytan.sandbox.cedille.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: httpbin-sandbox-cedille-club
+    group: production
+    url: "https://httpbin.sandbox.cedille.club/"
     interval: 5m
     conditions:
       - "[STATUS] == 200"
@@ -571,9 +623,35 @@ endpoints:
         failure-threshold: 3
         success-threshold: 2
 
+  - name: outline-sandbox-cedille-club
+    group: production
+    url: "https://outline.sandbox.cedille.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
   - name: penpot-prodv2-cedille-club
     group: production
     url: "https://penpot.prodv2.cedille.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: penpot-sandbox-cedille-club
+    group: production
+    url: "https://penpot.sandbox.cedille.club/"
     interval: 5m
     conditions:
       - "[STATUS] == 200"
@@ -766,6 +844,19 @@ endpoints:
         failure-threshold: 3
         success-threshold: 2
 
+  - name: summercamp-dciets-com
+    group: production
+    url: "https://summercamp.dciets.com/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
   - name: summercamp2026-etsmtl-club
     group: production
     url: "https://summercamp2026.etsmtl.club/"
@@ -782,19 +873,6 @@ endpoints:
   - name: summercampbot-dciets-etsmtl-club
     group: production
     url: "https://summercampbot.dciets.etsmtl.club/"
-    interval: 5m
-    conditions:
-      - "[STATUS] == 200"
-      - "[CERTIFICATE_EXPIRATION] > 48h"
-    alerts:
-      - type: slack
-        enabled: false
-        failure-threshold: 3
-        success-threshold: 2
-
-  - name: summercamp-dciets-com
-    group: production
-    url: "https://summercamp.dciets.com/"
     interval: 5m
     conditions:
       - "[STATUS] == 200"
@@ -909,6 +987,19 @@ endpoints:
         failure-threshold: 3
         success-threshold: 2
 
+  - name: vault-sandbox-cedille-club
+    group: production
+    url: "https://vault.sandbox.cedille.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
   - name: vaultwarden-etsmtl-club
     group: production
     url: "https://vaultwarden.etsmtl.club/"
@@ -1000,6 +1091,19 @@ endpoints:
         failure-threshold: 3
         success-threshold: 2
 
+  - name: wiki-sandbox-etsmtl-club
+    group: production
+    url: "https://wiki.sandbox.etsmtl.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
   - name: wiki-sonia-etsmtl-ca
     group: production
     url: "https://wiki.sonia.etsmtl.ca/"
@@ -1051,3 +1155,17 @@ endpoints:
         enabled: false
         failure-threshold: 3
         success-threshold: 2
+
+  - name: xibo-sandbox-cedille-club
+    group: production
+    url: "https://xibo.sandbox.cedille.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
