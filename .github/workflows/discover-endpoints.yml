@@ -28,6 +28,8 @@ jobs:
         run: sudo apt install jq kubectl
 
       - name: Run endpoint discovery
+        env:
+          KUBE64: ${{ secrets.KUBE64 }}
         run: |
           chmod +x scripts/generate-gatus-config.sh
           OUTPUT_FILE=config.yaml scripts/generate-gatus-config.sh
