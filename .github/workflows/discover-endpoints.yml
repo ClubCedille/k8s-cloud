@@ -51,8 +51,9 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           git add config.yaml
-          git commit -m "Auto-update Gatus config - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
-          git push
+          git commit -m "Auto-update Gatus config - $(date -u +'%Y-%m-%d %H:%M:%S UTC')" || echo "No commit needed"
+          git pull --rebase origin main
+          git push origin main
 
       - name: Trigger deployment
         if: steps.check_changes.outputs.changed == 'true'
