@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Setup auth
+COUNT=$(kubectl config get-clusters | wc -l)
+if $COUNT == 1; then
+    echo $KUBE64 | base64 -d > kube-config.yaml
+    export KUBECONFIG=kube-config.yaml
+fi
+
 # Configuration
 OUTPUT_FILE="${OUTPUT_FILE:-config.yaml}"
 CHECK_INTERVAL="${CHECK_INTERVAL:-5m}"
@@ -8,8 +15,9 @@ CERTIFICATE_EXPIRATION_THRESHOLD="${CERTIFICATE_EXPIRATION_THRESHOLD:-48h}"
 
 # Kubernetes contexts to scan
 CONTEXTS=(
-  cedille-k8s-shared
-  cedille-k8s-cedille-production-v2
+cedille-k8s-cedille-sandbox-gatus
+cedille-k8s-shared-gatus
+cedille-k8s-cedille-production-v2-gatus
 )
 
 # Temporary file to store all discovered endpoints
