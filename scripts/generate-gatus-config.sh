@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Setup auth
 if [ $(kubectl config get-clusters | wc -l) -eq 1 ]; then
-    echo $KUBE64 | base64 -d > kube-config.yaml
+    echo "$KUBE64" | base64 -d > kube-config.yaml
     export KUBECONFIG=kube-config.yaml
 fi
 
