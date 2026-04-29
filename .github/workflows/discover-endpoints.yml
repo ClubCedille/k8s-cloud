@@ -24,22 +24,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: omnictl
-        using: docker
-        image: docker://mcmahan/omnictl:1.6.0
-        env:
-          OMNI_ENDPOINT: ${{ inputs.omni-endpoint }}
-          OMNI_SERVICE_ACCOUNT_KEY: ${{ inputs.omni-service-account-key }}
-        args:
-          - /bin/sh
-          - '-c'
-          - cd ${{ inputs.working-directory }} &&
-
-      - name: Setup kubectl
-        uses: azure/setup-kubectl@v3
-        with:
-          version: 'v1.28.0'
-
       - name: Install dependencies
         run: apt install jq kubectl
 
