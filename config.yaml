@@ -623,6 +623,19 @@ endpoints:
         failure-threshold: 3
         success-threshold: 2
 
+  - name: null
+    group: production
+    url: "https://null/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
   - name: outline-sandbox-cedille-club
     group: production
     url: "https://outline.sandbox.cedille.club/"
