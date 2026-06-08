@@ -285,6 +285,19 @@ endpoints:
         failure-threshold: 3
         success-threshold: 2
 
+  - name: etshub-prodv2-cedille-club
+    group: production
+    url: "https://etshub.prodv2.cedille.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
   - name: evovelo-etsmtl-ca
     group: production
     url: "https://evovelo.etsmtl.ca/"
