@@ -17,7 +17,7 @@ endpoints:
     url: "https://acets.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -30,7 +30,7 @@ endpoints:
     url: "https://argocd.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -43,7 +43,7 @@ endpoints:
     url: "https://atelier.crabe.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -56,7 +56,7 @@ endpoints:
     url: "https://auth.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -66,10 +66,23 @@ endpoints:
 
   - name: calidum-rotae-prodv2-cedille-club
     group: production
-    url: "https://calidum-rotae.prodv2.cedille.club/"
+    url: "tcp://calidum-rotae.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: campusparent-etsmtl-club
+    group: production
+    url: "https://campusparent.etsmtl.club/api"
+    interval: 5m
+    conditions:
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -82,7 +95,7 @@ endpoints:
     url: "https://campusparent.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -95,7 +108,7 @@ endpoints:
     url: "https://cedille.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -108,7 +121,7 @@ endpoints:
     url: "https://cedille.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -121,7 +134,7 @@ endpoints:
     url: "https://cedille.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -134,7 +147,7 @@ endpoints:
     url: "https://collabora-nextcloud.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -147,7 +160,7 @@ endpoints:
     url: "https://comets-ets.com/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -160,7 +173,7 @@ endpoints:
     url: "https://comets.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -173,7 +186,7 @@ endpoints:
     url: "https://commande.fraternitedupiranha.com/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -186,7 +199,7 @@ endpoints:
     url: "https://conjure.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -199,7 +212,7 @@ endpoints:
     url: "https://coroot.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -212,7 +225,7 @@ endpoints:
     url: "https://coroot.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -225,7 +238,7 @@ endpoints:
     url: "https://crabe.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -238,7 +251,7 @@ endpoints:
     url: "https://ctfd.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -251,7 +264,7 @@ endpoints:
     url: "https://dronolab.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -264,7 +277,20 @@ endpoints:
     url: "https://esports.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: etshub-prodv2-cedille-club
+    group: production
+    url: "https://etshub.prodv2.cedille.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -277,7 +303,7 @@ endpoints:
     url: "https://evovelo.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -290,7 +316,7 @@ endpoints:
     url: "https://evovelo.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -303,7 +329,7 @@ endpoints:
     url: "https://exutoire.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -316,7 +342,7 @@ endpoints:
     url: "https://exutoire.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -329,7 +355,7 @@ endpoints:
     url: "https://forom.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -342,7 +368,7 @@ endpoints:
     url: "https://forom.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -355,7 +381,7 @@ endpoints:
     url: "https://gatus.sandbox.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -368,7 +394,7 @@ endpoints:
     url: "https://git.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -381,7 +407,7 @@ endpoints:
     url: "https://grafana.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -394,7 +420,7 @@ endpoints:
     url: "https://habitek.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -407,7 +433,7 @@ endpoints:
     url: "https://habitek.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -420,20 +446,7 @@ endpoints:
     url: "https://helm.byzantium.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
-      - "[CERTIFICATE_EXPIRATION] > 48h"
-    alerts:
-      - type: slack
-        enabled: false
-        failure-threshold: 3
-        success-threshold: 2
-
-  - name: httpbin-sh4ytan-sandbox-cedille-club
-    group: production
-    url: "https://httpbin-sh4ytan.sandbox.cedille.club/"
-    interval: 5m
-    conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -446,7 +459,20 @@ endpoints:
     url: "https://httpbin.sandbox.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: httpbin-sh4ytan-sandbox-cedille-club
+    group: production
+    url: "https://httpbin-sh4ytan.sandbox.cedille.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -459,7 +485,7 @@ endpoints:
     url: "https://influxdb.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -472,7 +498,7 @@ endpoints:
     url: "https://ingenieuses.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -485,7 +511,7 @@ endpoints:
     url: "https://integrale.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -498,7 +524,7 @@ endpoints:
     url: "https://kubero.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -511,7 +537,7 @@ endpoints:
     url: "https://littlelink.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -524,7 +550,7 @@ endpoints:
     url: "https://markets.algoets.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -537,7 +563,7 @@ endpoints:
     url: "https://markets.dev.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -550,7 +576,7 @@ endpoints:
     url: "https://markets.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -563,7 +589,7 @@ endpoints:
     url: "https://matomo.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -576,7 +602,7 @@ endpoints:
     url: "https://mdp.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -589,7 +615,7 @@ endpoints:
     url: "https://n8n.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -602,7 +628,7 @@ endpoints:
     url: "https://netbox.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -615,7 +641,7 @@ endpoints:
     url: "https://nextcloud.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -628,7 +654,7 @@ endpoints:
     url: "https://outline.sandbox.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -641,7 +667,7 @@ endpoints:
     url: "https://penpot.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -654,7 +680,7 @@ endpoints:
     url: "https://penpot.sandbox.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -667,7 +693,7 @@ endpoints:
     url: "https://plane.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -680,7 +706,33 @@ endpoints:
     url: "https://planifets.clubapplets.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: planifets-clubapplets-ca
+    group: production
+    url: "https://planifets.clubapplets.ca/.well-known/acme-challenge/L0CYZV8Mr-UgSeaxK10zPXWzY4g-atul71KYM3-3gk4"
+    interval: 5m
+    conditions:
+      - "[STATUS] >= 200 && [STATUS] < 400"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: planifets-dev-cedille-club
+    group: staging
+    url: "https://planifets.dev.cedille.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -693,7 +745,20 @@ endpoints:
     url: "https://planifets.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: planifets-staging-cedille-club
+    group: staging
+    url: "https://planifets.staging.cedille.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -706,7 +771,20 @@ endpoints:
     url: "https://planka.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: planka-etsmtl-club
+    group: production
+    url: "https://planka.etsmtl.club/.well-known/acme-challenge/9x6Cgz4Htp8UZarnWCECevoOgMeheZneexDV-GYB8EE"
+    interval: 5m
+    conditions:
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -719,7 +797,7 @@ endpoints:
     url: "https://pr-241.cedille.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -732,7 +810,7 @@ endpoints:
     url: "https://pr-72.synapse.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -745,7 +823,7 @@ endpoints:
     url: "https://pr-73.synapse.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -758,7 +836,7 @@ endpoints:
     url: "https://pr-77.synapse.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -771,7 +849,7 @@ endpoints:
     url: "https://pr-85.synapse.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -784,7 +862,7 @@ endpoints:
     url: "https://preci.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -797,7 +875,7 @@ endpoints:
     url: "https://pwd.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -810,7 +888,7 @@ endpoints:
     url: "https://raconteurs.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -823,7 +901,7 @@ endpoints:
     url: "https://saveursdegenie.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -836,20 +914,7 @@ endpoints:
     url: "https://sonarqube.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
-      - "[CERTIFICATE_EXPIRATION] > 48h"
-    alerts:
-      - type: slack
-        enabled: false
-        failure-threshold: 3
-        success-threshold: 2
-
-  - name: summercamp-dciets-com
-    group: production
-    url: "https://summercamp.dciets.com/"
-    interval: 5m
-    conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -862,7 +927,7 @@ endpoints:
     url: "https://summercamp2026.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -872,10 +937,23 @@ endpoints:
 
   - name: summercampbot-dciets-etsmtl-club
     group: production
-    url: "https://summercampbot.dciets.etsmtl.club/"
+    url: "tcp://summercampbot.dciets.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: summercamp-dciets-com
+    group: production
+    url: "https://summercamp.dciets.com/"
+    interval: 5m
+    conditions:
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -885,23 +963,10 @@ endpoints:
 
   - name: supabase-exutoire-etsmtl-club
     group: production
-    url: "https://supabase.exutoire.etsmtl.club/"
+    url: "tcp://supabase.exutoire.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
-      - "[CERTIFICATE_EXPIRATION] > 48h"
-    alerts:
-      - type: slack
-        enabled: false
-        failure-threshold: 3
-        success-threshold: 2
-
-  - name: supabase-prodv2-cedille-club
-    group: production
-    url: "https://supabase.prodv2.cedille.club/"
-    interval: 5m
-    conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -914,7 +979,7 @@ endpoints:
     url: "https://synapsets.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -927,7 +992,7 @@ endpoints:
     url: "https://sync-wiki.jdgets.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -937,10 +1002,10 @@ endpoints:
 
   - name: trema-prodv2-cedille-club
     group: production
-    url: "https://trema.prodv2.cedille.club/"
+    url: "tcp://trema.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -953,7 +1018,7 @@ endpoints:
     url: "https://twenty.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -966,7 +1031,7 @@ endpoints:
     url: "https://vault.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -979,7 +1044,7 @@ endpoints:
     url: "https://vault.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -992,7 +1057,7 @@ endpoints:
     url: "https://vault.sandbox.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1005,7 +1070,7 @@ endpoints:
     url: "https://vaultwarden.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1018,7 +1083,20 @@ endpoints:
     url: "https://wiki.capra.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: slack
+        enabled: false
+        failure-threshold: 3
+        success-threshold: 2
+
+  - name: wiki-capra-etsmtl-club
+    group: production
+    url: "https://wiki.capra.etsmtl.club/"
+    interval: 5m
+    conditions:
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1031,7 +1109,7 @@ endpoints:
     url: "https://wiki.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1044,7 +1122,7 @@ endpoints:
     url: "https://wiki.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1057,7 +1135,7 @@ endpoints:
     url: "https://wiki.jdgets.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1065,12 +1143,12 @@ endpoints:
         failure-threshold: 3
         success-threshold: 2
 
-  - name: wiki-minikube-local
+  - name: wiki-piranha-etsmtl-club
     group: production
-    url: "https://wiki.minikube.local/"
+    url: "https://wiki.piranha.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1083,7 +1161,7 @@ endpoints:
     url: "https://wiki.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1096,7 +1174,7 @@ endpoints:
     url: "https://wiki.sandbox.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1109,7 +1187,7 @@ endpoints:
     url: "https://wiki.sonia.etsmtl.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1122,7 +1200,7 @@ endpoints:
     url: "https://wiki.synapsets.prodv2.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1135,7 +1213,7 @@ endpoints:
     url: "https://www.ingenieuses.ca/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1148,7 +1226,7 @@ endpoints:
     url: "https://xibo.etsmtl.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
@@ -1161,11 +1239,10 @@ endpoints:
     url: "https://xibo.sandbox.cedille.club/"
     interval: 5m
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts:
       - type: slack
         enabled: false
         failure-threshold: 3
         success-threshold: 2
-
