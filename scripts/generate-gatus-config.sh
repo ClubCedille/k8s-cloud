@@ -32,17 +32,27 @@ for ctx in "${CONTEXTS[@]}"; do
     continue
   fi
 
-  # Get HTTPProxy endpoints
+  # Get HTTPProxy endpoints and prefer gatus annotations when present
   kubectl --context="$ctx" get httpproxies.projectcontour.io -A -o json 2>/dev/null \
     | jq -r '.items[]
     | select(.spec.ingressClassName == null or .spec.ingressClassName == "contour")
-    | .spec.virtualhost.fqdn' >> "$TEMP_ENDPOINTS" || true
+    | . as $item
+    | ($item.spec.virtualhost.fqdn // "") as $fqdn
+    | ($item.metadata.annotations["gatus.cedille/health-path"] // ($item.spec.routes[0].conditions[0].prefix // "/")) as $path
+    | ($item.metadata.annotations["gatus.cedille/protocol"] // "https") as $proto
+    | ($item.metadata.annotations["gatus.cedille/skip-monitor"] // "false") as $skip
+    | $fqdn + "|" + ($path|tostring) + "|" + $proto + "|" + ($skip|tostring)' >> "$TEMP_ENDPOINTS" || true
 
-  # Get Ingress endpoints
+  # Get Ingress endpoints and prefer gatus annotations when present
   kubectl --context="$ctx" get ingress -A -o json 2>/dev/null \
     | jq -r '.items[]
     | select(.spec.ingressClassName == null or .spec.ingressClassName == "contour")
-    | .spec.rules[].host' >> "$TEMP_ENDPOINTS" || true
+    | . as $item
+    | ($item.spec.rules[]? | .host) as $host
+    | ($item.metadata.annotations["gatus.cedille/health-path"] // ($item.spec.rules[0].http.paths[0].path // "/")) as $path
+    | ($item.metadata.annotations["gatus.cedille/protocol"] // "https") as $proto
+    | ($item.metadata.annotations["gatus.cedille/skip-monitor"] // "false") as $skip
+    | ($host // "") + "|" + ($path|tostring) + "|" + $proto + "|" + ($skip|tostring)' >> "$TEMP_ENDPOINTS" || true
 done
 
 # Remove duplicates and sort
@@ -74,8 +84,14 @@ while IFS= read -r endpoint; do
   # Skip empty lines
   [[ -z "$endpoint" ]] && continue
 
+  # Each discovered line is stored as: host|path|protocol|skip
+  HOST=$(echo "$endpoint" | cut -d '|' -f1)
+  PATH_VAL=$(echo "$endpoint" | cut -d '|' -f2)
+  PROTO=$(echo "$endpoint" | cut -d '|' -f3)
+  SKIP=$(echo "$endpoint" | cut -d '|' -f4)
+
   # Sanitize endpoint name (replace dots and hyphens for Gatus compatibility)
-  ENDPOINT_NAME=$(echo "$endpoint" | sed 's/\./-/g')
+  ENDPOINT_NAME=$(echo "$HOST" | sed 's/\./-/g')
 
   # Determine group based on domain patterns
   GROUP="production"
@@ -85,14 +101,28 @@ while IFS= read -r endpoint; do
     GROUP="internal"
   fi
 
-  # Add endpoint configuration
+  # Respect explicit skip annotation
+  if [[ "$SKIP" == "true" ]]; then
+    continue
+  fi
+
+  # Skip obvious local-only hosts unless explicitly requested
+  if [[ "$HOST" == *".local"* ]] || [[ "$HOST" == *"minikube"* ]]; then
+    continue
+  fi
+
+  # Default protocol/path if empty
+  PROTO=${PROTO:-https}
+  PATH_VAL=${PATH_VAL:-/}
+
+  # Add endpoint configuration using discovered path/protocol and a permissive status range (2xx-3xx)
   cat >> "$OUTPUT_FILE" <<EOF
   - name: ${ENDPOINT_NAME}
     group: ${GROUP}
-    url: "https://${endpoint}/"
+    url: "${PROTO}://${HOST}${PATH_VAL}"
     interval: ${CHECK_INTERVAL}
     conditions:
-      - "[STATUS] == 200"
+      - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > ${CERTIFICATE_EXPIRATION_THRESHOLD}"
     alerts:
       - type: slack
