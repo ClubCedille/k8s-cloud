@@ -1,0 +1,45 @@
+name: "Deploy VM"
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'config.yaml'
+      - 'Dockerfile'
+      - '.github/workflows/deploy-gatus.yml'
+    pull_request:
+      branches: ["main"]
+
+env:
+  TF_VAR_ssh_private_key: ${{ secrets.VM_SSH_KEY }}
+  TV_VAR_service_ac: ${{ secrets.service_ac}}
+  TV_VAR_ssh_privatekey: ${{secrets.VM_SSH_KEY}}
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ secrets.project_id}}
+          service_account: ${{ secrets.service_ac}}
+
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve
+        working-directory: ./terraform
+
