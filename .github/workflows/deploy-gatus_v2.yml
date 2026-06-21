@@ -6,7 +6,7 @@ on:
       - 'config.yaml'
       - 'Dockerfile'
       - '.github/workflows/deploy-gatus.yml'
-    pull_request:
+  pull_request:
       branches: ["main"]
 
 env:
