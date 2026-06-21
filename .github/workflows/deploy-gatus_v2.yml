@@ -1,4 +1,4 @@
-name: "Deploy VM"
+name: Deploy VM
 on:
   push:
     branches: ["main"]
