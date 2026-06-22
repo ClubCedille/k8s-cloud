@@ -1,8 +1,9 @@
-FROM twinproduction/gatus:latest
+FROM alpine:latest AS builder
 
 # Create data directory for SQLite
 RUN mkdir -p /data && chown 65534:65534 /data
 
+FROM twinproduction/gatus:latest
 # Copy the generated config
 COPY config.yaml /config/config.yaml
 

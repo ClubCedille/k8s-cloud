@@ -1,9 +1,12 @@
 #!/bin/bash
+set +x 
+set -e 
 
 mkdir -p /root/.ssh
-echo "${ssh_private_key}" > /root/.ssh/id_rsa
+printf "%s" "${ssh_private_key}" > /root/.ssh/id_rsa
 chmod 600 /root/.ssh/id_rsa
 
+set -x
 cat <<EOF > /root/.ssh/config
 Host github.com
 	HostName github.com
@@ -17,5 +20,13 @@ GIT_SSH_COMMAND="ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no" git clone
 
 cd gatus
 chmod +x generate-gatus-config.sh
-docker build -t gatus .
-docker run -d -p 80:8080 --name gatus gatus
+./generate-gatus-config.sh
+
+docker run -d \
+  --name gatus \
+  --restart unless-stopped \
+  -p 8080:80 \
+  -v "$(pwd)/config.yaml:/config/config.yaml:ro" \
+  twinproduction/gatus:latest \
+  --config /config/config.yaml
+

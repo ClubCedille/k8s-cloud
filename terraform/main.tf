@@ -14,9 +14,9 @@ provider "google" {
 }
 
 resource "google_compute_instance" "gatus-vm" {
-  name = "ced-gce-gatus-prd-na1-01"
+  name = var.machine_name
   machine_type = "e2-micro"
-  zone = "northamerica-northeast1-a"
+  zone = var.region
   labels = {
     managed-by = "terraform"
     env = "prd"
@@ -48,8 +48,18 @@ resource "google_compute_instance" "gatus-vm" {
   metadata_startup_script = templatefile(abspath("${path.module}/../scripts/startup.sh.tftpl"), {
     ssh_private_key = var.ssh_private_key
   })
+  metadata = {
+  enable-oslogin = "TRUE"
+}
   
 }
+resource "google_compute_instance_iam_member" "ssh_access" {
+  instance_name = google_compute_instance.gatus-vm.name
+  zone          = google_compute_instance.gatus-vm.zone
+  role          = "roles/compute.osLogin"
+  member        = "serviceAccount:${var.email_sa}"
+}
+
 
 resource "google_compute_firewall" "allow-httptrafic"{
   name = "allow-httpgatus"
