@@ -17,7 +17,6 @@ EOF
 apt update
 apt install -y docker.io git curl
 GIT_SSH_COMMAND="ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no" git clone git@github.com:ClubCedille/k8s-cloud.git gatus
-
 cd gatus
 
 docker run -d \

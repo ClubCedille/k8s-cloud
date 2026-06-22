@@ -60,7 +60,6 @@ resource "google_compute_instance_iam_member" "ssh_access" {
   member        = "serviceAccount:${var.email_sa}"
 }
 
-
 resource "google_compute_firewall" "allow-httptrafic"{
   name = "allow-httpgatus"
   network = "default"
