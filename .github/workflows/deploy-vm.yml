@@ -54,7 +54,7 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: ./terraform
 
-    deploy_gatus:
+    deploy:
       needs: terraform
       runs-on: ubuntu-latest
       permissions: 
