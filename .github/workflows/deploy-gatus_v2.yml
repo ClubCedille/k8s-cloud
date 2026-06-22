@@ -8,7 +8,8 @@ on:
       - '.github/workflows/deploy-gatus.yml'
       - ".tf"
   pull_request:
-      branches: ["main"]
+    branches: ["main"]
+    paths:
       - 'config.yaml'
       - 'Dockerfile'
       - '.github/workflows/deploy-gatus.yml'
