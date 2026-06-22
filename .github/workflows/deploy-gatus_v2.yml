@@ -11,7 +11,7 @@ on:
 
 env:
   TF_VAR_ssh_private_key: ${{ secrets.VM_SSH_KEY }}
-  TF_VAR_service_ac: ${{ secrets.GCP_SERVICE_ACCOUNT}}
+  TF_VAR_service_sa: ${{ secrets.GCP_SERVICE_ACCOUNT}}
   TF_VAR_ssh_privatekey: ${{secrets.VM_SSH_KEY}}
 
 jobs:
