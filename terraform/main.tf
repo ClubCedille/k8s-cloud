@@ -16,7 +16,7 @@ provider "google" {
 resource "google_compute_instance" "gatus-vm" {
   name = var.machine_name
   machine_type = "e2-micro"
-  zone = "northamerica-northeast1-a"
+  zone = var.region
   labels = {
     managed-by = "terraform"
     env = "prd"
