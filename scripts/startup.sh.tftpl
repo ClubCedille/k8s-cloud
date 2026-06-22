@@ -1,0 +1,21 @@
+#!/bin/bash
+
+mkdir -p /root/.ssh
+echo "{ssh_private_key}" > /root/.ssh/id_rsa
+chmod 600 /root/.ssh/id_rsa
+
+cat <<EOF > /root/.ssh/config
+Host github.com
+	HostName github.com
+	IdentityFile /root/.ssh/id_rsa
+	StrictHostKeyCheking no
+EOF
+
+apt update
+apt install -y docker.io git curl
+GIT_SSH_COMMAND="ssh -i /root/.ssh/id_rsa -o StrictHostKeyCheking no" git clone git@github.com:ClubCedille/k8s-cloud.git gatus
+
+cd gatus
+chmod +x generate-gatus-config.sh
+docker build -t gatus .
+docker run -d -p 8080:80 --name gatus gatus

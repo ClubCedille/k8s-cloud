@@ -1,0 +1,53 @@
+name: Deploy VM
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'config.yaml'
+      - 'Dockerfile'
+      - '.github/workflows/deploy-gatus.yml'
+  pull_request:
+      branches: ["main"]
+
+env:
+  TF_VAR_ssh_private_key: ${{ secrets.VM_SSH_KEY }}
+  TF_VAR_email_sa: ${{ secrets.GCP_SERVICE_ACCOUNT}}
+  TF_VAR_ssh_privatekey: ${{secrets.VM_SSH_KEY}}
+  TF_VAR_project_id: ${{secrets.GCP_PROJECT_ID}}
+  TF_VAR_region: ${{secrets.REGION}}
+
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{secrets.WORKLOAD_IDENTITY_PROVIDER}}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT}}
+
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform init
+        run: terraform init -upgrade -backend-config="bucket=${{secrets.GCP_BUCKET}}" -backend-config="prefix=terraform/state"
+        working-directory: ./terraform
+
+      - name: Terraform Plan
+        if: github.event_name == 'pull_request' || github.ref != 'refs/heads/main'
+        run: terraform plan
+        working-directory: ./terraform
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve
+        working-directory: ./terraform
