@@ -7,8 +7,10 @@ on:
       - 'Dockerfile'
       - '.github/workflows/deploy-vm.yml'
       - 'startup.sh.tftpl'
+      - 'terraform/**'
   pull_request:
       branches: ["main"]
+  workflow_dispatch:
 
 env:
   TF_VAR_ssh_private_key: ${{ secrets.VM_SSH_KEY }}
