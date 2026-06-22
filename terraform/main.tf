@@ -16,16 +16,17 @@ provider "google" {
 resource "google_compute_instance" "gatus-vm" {
   name = "ced-gce-gatus-prd-na1-01"
   machine_type = "e2-micro"
-  zone = "northamerica-norhteast1-a"
+  zone = "northamerica-northeast1-a"
   labels = {
     managed-by = "terraform"
     env = "prd"
     app = "gatus"
   }
+  tags=["gatus"]
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-13"
+      image = "debian-cloud/debian-12"
     }
   }
   network_interface {
@@ -42,7 +43,7 @@ resource "google_compute_instance" "gatus-vm" {
 
   service_account {
     email = var.email_sa
-    scopes = ["cloud-plateform"]
+    scopes = ["cloud-platform"]
   }
   metadata_startup_script = templatefile(abspath("${path.module}/../scripts/startup.sh.tftpl"), {
     ssh_private_key = var.ssh_private_key
@@ -63,5 +64,5 @@ resource "google_compute_firewall" "allow-httptrafic"{
 }
 
 output "gatus_ip" {
-    value = google_compute_instance.gatus-vm.network_interface.0.access_config.0.nat_ip
+  value = google_compute_instance.gatus-vm.network_interface[0].access_config[0].nat_ip
 }
