@@ -17,3 +17,8 @@ variable "ssh_private_key" {
   type = string
   description = "ssh private key. Confidential data, place data in a secret."
 }
+
+variable "gcs"{
+  type = string
+  description = "bucket for tfstate"
+}

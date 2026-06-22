@@ -4,6 +4,10 @@ terraform{
       source="hashicorp/google"
     }
   }
+  backend "gcs"{
+    bucket = var.bucket
+    prefix = "terraform/state"
+  }
 }
 
 provider "google" {
