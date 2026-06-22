@@ -57,7 +57,7 @@ resource "google_compute_instance_iam_member" "ssh_access" {
   instance_name = google_compute_instance.gatus-vm.name
   zone          = google_compute_instance.gatus-vm.zone
   role          = "roles/compute.osLogin"
-  member        = var.email_sa
+  member        = "serviceAccount:${var.email_sa}"
 }
 
 

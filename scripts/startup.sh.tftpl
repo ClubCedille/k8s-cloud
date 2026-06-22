@@ -1,9 +1,12 @@
 #!/bin/bash
+set +x 
+set -e 
 
 mkdir -p /root/.ssh
-echo "${ssh_private_key}" > /root/.ssh/id_rsa
+printf "%s" "${ssh_private_key}" > /root/.ssh/id_rsa
 chmod 600 /root/.ssh/id_rsa
 
+set -x
 cat <<EOF > /root/.ssh/config
 Host github.com
 	HostName github.com
