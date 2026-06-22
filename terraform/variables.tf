@@ -18,3 +18,7 @@ variable "ssh_private_key" {
   description = "ssh private key. Confidential data, place data in a secret."
 }
 
+variable "machine_name"{
+  type = string
+  description = "machine name"
+}

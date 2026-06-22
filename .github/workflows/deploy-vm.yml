@@ -5,18 +5,10 @@ on:
     paths:
       - 'config.yaml'
       - 'Dockerfile'
-      - '.github/workflows/deploy-gatus_v2.yml'
-      - ".tf"
-
+      - '.github/workflows/deploy-vm.yml'
+      - 'startup.sh.tftpl'
   pull_request:
-    branches: ["main"]
-    paths:
-      - 'config.yaml'
-      - 'Dockerfile'
-      - '.github/workflows/deploy-gatus_v2.yml'
-      - ".tf"
-
-
+      branches: ["main"]
 
 env:
   TF_VAR_ssh_private_key: ${{ secrets.VM_SSH_KEY }}
@@ -24,6 +16,7 @@ env:
   TF_VAR_ssh_privatekey: ${{secrets.VM_SSH_KEY}}
   TF_VAR_project_id: ${{secrets.GCP_PROJECT_ID}}
   TF_VAR_region: ${{secrets.REGION}}
+  TF_VAR_machine_name: ${{secrets.GCP_MACHINE_NAME}}
 
 
 jobs:
