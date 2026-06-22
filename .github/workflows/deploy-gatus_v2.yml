@@ -6,8 +6,15 @@ on:
       - 'config.yaml'
       - 'Dockerfile'
       - '.github/workflows/deploy-gatus.yml'
+      - ".tf"
   pull_request:
       branches: ["main"]
+      - 'config.yaml'
+      - 'Dockerfile'
+      - '.github/workflows/deploy-gatus.yml'
+      - ".tf"
+
+
 
 env:
   TF_VAR_ssh_private_key: ${{ secrets.VM_SSH_KEY }}
