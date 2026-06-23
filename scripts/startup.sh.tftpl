@@ -3,20 +3,20 @@ set +x
 set -e 
 
 mkdir -p /root/.ssh
-printf "%s" "${ssh_private_key}" > /root/.ssh/id_rsa
-chmod 600 /root/.ssh/id_rsa
+printf "%s" "${ssh_private_key}" > /root/.ssh/id_ed25519
+chmod 600 /root/.ssh/id_ed25519
 
 set -x
 cat <<EOF > /root/.ssh/config
 Host github.com
 	HostName github.com
-	IdentityFile /root/.ssh/id_rsa
+	IdentityFile /root/.ssh/id_ed25519
 	StrictHostKeyChecking no
 EOF
 
 apt update
 apt install -y docker.io git curl
-GIT_SSH_COMMAND="ssh -i /root/.ssh/id_rsa -o StrictHostKeyChecking=no" git clone git@github.com:ClubCedille/k8s-cloud.git gatus
+GIT_SSH_COMMAND="ssh -i /root/.ssh/id_ed25519 -o StrictHostKeyChecking=no" git clone git@github.com:ClubCedille/k8s-cloud.git gatus
 cd gatus
 
 docker run -d \
