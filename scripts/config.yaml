@@ -647,7 +647,7 @@ endpoints:
       - type: slack
         enabled: false
         failure-threshold: 3
-        success-threshold: 2g
+        success-threshold: 2
 
   - name: outline-sandbox-cedille-club
     group: production
