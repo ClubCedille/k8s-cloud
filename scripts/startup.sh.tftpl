@@ -19,11 +19,8 @@ apt install -y docker.io git curl
 GIT_SSH_COMMAND="ssh -i /root/.ssh/id_ed25519 -o StrictHostKeyChecking=no" git clone git@github.com:ClubCedille/k8s-cloud.git gatus
 cd gatus
 
-docker run -d \
-  --name gatus \
-  --restart unless-stopped \
-  -p 8080:80 \
-  -v "$(pwd)/config.yaml:/config/config.yaml:ro" \
+docker run --rm \
+  -v "$(pwd):/config:ro" \
   twinproduction/gatus:latest \
   --config /config/config.yaml
 
