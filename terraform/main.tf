@@ -17,12 +17,13 @@ resource "google_compute_instance" "gatus-vm" {
   name = var.machine_name
   machine_type = "e2-micro"
   zone = var.region
+  tags = ["gatus"]
   labels = {
     managed-by = "terraform"
     env = "prd"
     app = "gatus"
   }
-  tags=["gatus"]
+  
 
   boot_disk {
     initialize_params {
