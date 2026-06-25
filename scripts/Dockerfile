@@ -1,9 +1,14 @@
-FROM alpine:latest AS builder
+FROM alpine:latest
+
+# Install any necessary packages including bash
+RUN apk add --no-cache bash
+
+# Then copy the gatus binary from the original image if necessary
+COPY --from=twinproduction/gatus:latest /gatus /gatus
 
 # Create data directory for SQLite
 RUN mkdir -p /data && chown 65534:65534 /data
 
-FROM twinproduction/gatus:latest
 # Copy the generated config
 COPY config.yaml /config/config.yaml
 
