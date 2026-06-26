@@ -95,10 +95,12 @@ while IFS= read -r endpoint; do
 
   # Determine group based on domain patterns
   GROUP="production"
-  if [[ "$endpoint" == *"staging"* ]] || [[ "$endpoint" == *"dev"* ]]; then
-    GROUP="staging"
+  if [[ "$endpoint" == *"etsmtl.club"* ]]; then
+      GROUP="shared"
+  elif [[ "$endpoint" == *"staging"* ]] || [[ "$endpoint" == *"dev"* ]]; then
+      GROUP="staging"
   elif [[ "$endpoint" == *"internal"* ]] || [[ "$endpoint" == *"admin"* ]]; then
-    GROUP="internal"
+      GROUP="internal"
   fi
 
   # Respect explicit skip annotation
@@ -124,11 +126,6 @@ while IFS= read -r endpoint; do
     conditions:
       - "[STATUS] >= 200 && [STATUS] < 400"
       - "[CERTIFICATE_EXPIRATION] > ${CERTIFICATE_EXPIRATION_THRESHOLD}"
-    alerts:
-      - type: slack
-        enabled: false
-        failure-threshold: 3
-        success-threshold: 2
 
 EOF
 done <<< "$UNIQUE_ENDPOINTS"
