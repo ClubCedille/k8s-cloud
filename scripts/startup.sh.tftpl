@@ -19,6 +19,6 @@ apt install -y docker.io git curl
 GIT_SSH_COMMAND="ssh -i /root/.ssh/id_ed25519 -o StrictHostKeyChecking=no" git clone git@github.com:ClubCedille/k8s-cloud.git gatus
 cd gatus/scripts
 
-docker build -t gatus:1.1
+docker build -t gatus:1.1 .
 docker run -d --name gatus-2 -p 80:8080 gatus:1.1
 
