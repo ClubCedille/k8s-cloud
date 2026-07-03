@@ -71,7 +71,10 @@ jobs:
           with:
             workload_identity_provider: ${{secrets.WORKLOAD_IDENTITY_PROVIDER}}
             service_account: ${{ secrets.GCP_SERVICE_ACCOUNT}}
-
+        - name: Setup GCloud
+          uses: google-github-actions/setup-gcloud@v2
+          with:
+            version: latest
         
         - name: Redéployer Gatus
           run: |
