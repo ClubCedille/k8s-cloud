@@ -11,6 +11,9 @@ on:
   pull_request:
       branches: ["main"]
   workflow_dispatch:
+  repository_dispatch:
+    types:
+      - deploy-gatus
 
 env:
   TF_VAR_ssh_private_key: ${{ secrets.VM_SSH_KEY }}
