@@ -53,36 +53,3 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve
         working-directory: ./terraform
-
-  deploy:
-      needs: terraform
-      runs-on: ubuntu-latest
-      permissions: 
-        contents: 'read'
-        id-token: 'write'
-
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
-
-        - name: Authenticate to GCP
-          uses: google-github-actions/auth@v2
-          with:
-            workload_identity_provider: ${{secrets.WORKLOAD_IDENTITY_PROVIDER}}
-            service_account: ${{ secrets.GCP_SERVICE_ACCOUNT}}
-        - name: Setup GCloud
-          uses: google-github-actions/setup-gcloud@v2
-          with:
-            version: latest
-        
-        - name: Redéployer Gatus
-          run: |
-            gcloud compute ssh ${{ secrets.GCP_MACHINE_NAME }} \
-              --zone="${{ secrets.REGION }}" \
-              --project="${{ secrets.GCP_PROJECT_ID }}" \
-              --tunnel-through-iap \
-              --command="
-                cd /gatus
-                GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git pull origin main
-                docker restart gatus
-              "
