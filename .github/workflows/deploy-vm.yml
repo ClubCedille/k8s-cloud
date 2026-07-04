@@ -46,7 +46,6 @@ jobs:
         working-directory: ./terraform
 
       - name: Terraform Plan
-        if: github.event_name == 'pull_request'
         run: terraform plan
         working-directory: ./terraform
 
@@ -83,7 +82,7 @@ jobs:
               --project="${{ secrets.GCP_PROJECT_ID }}" \
               --tunnel-through-iap \
               --command="
-                cd gatus
+                cd /gatus
                 GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no' git pull origin main
                 docker restart gatus
               "
