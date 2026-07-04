@@ -109,7 +109,7 @@ while IFS= read -r endpoint; do
   fi
 
   # Skip obvious local-only hosts unless explicitly requested
-  if [[ "$HOST" == *".local"* ]] || [[ "$HOST" == *"minikube"* ]]; then
+  if [[ "$HOST" == *".local"* ]] || [[ "$HOST" == *"minikube"* ]] || [[ "$HOST" == "" ]] ; then
     continue
   fi
 
@@ -124,7 +124,7 @@ while IFS= read -r endpoint; do
     url: "${PROTO}://${HOST}${PATH_VAL}"
     interval: ${CHECK_INTERVAL}
     conditions:
-      - "[STATUS] >= 200 && [STATUS] < 400"
+      - "[STATUS] == 200"
       - "[CERTIFICATE_EXPIRATION] > ${CERTIFICATE_EXPIRATION_THRESHOLD}"
 
 EOF
