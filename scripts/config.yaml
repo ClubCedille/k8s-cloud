@@ -388,13 +388,6 @@ endpoints:
       - "[STATUS] == 200"
       - "[CERTIFICATE_EXPIRATION] > 48h"
 
-  - name: planifets-clubapplets-ca
-    group: production
-    url: "https://planifets.clubapplets.ca/"
-    interval: 5m
-    conditions:
-      - "[STATUS] == 200"
-      - "[CERTIFICATE_EXPIRATION] > 48h"
 
   - name: planifets-clubapplets-ca
     group: production
