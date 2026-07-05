@@ -9,8 +9,8 @@ COPY --from=twinproduction/gatus:latest /gatus /gatus
 # Create data directory for SQLite
 RUN mkdir -p /data && chown 65534:65534 /data
 
-# Copy the generated config
-COPY config.yaml /config/config.yaml
+# Create config directory
+RUN mkdir -p /config && chown 65534:65534 /config
 
 # Set permissions
 RUN chown -R 65534:65534 /config

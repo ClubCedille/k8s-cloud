@@ -18,7 +18,16 @@ apt update
 apt install -y docker.io git curl
 GIT_SSH_COMMAND="ssh -i /root/.ssh/id_ed25519 -o StrictHostKeyChecking=no" git clone git@github.com:ClubCedille/k8s-cloud.git gatus
 cd gatus/scripts
+mkdir -p /var/lib/gatus && chown 65534:65534 /var/lib/gatus
+mkdir -p /etc/gatus && chown 65534:65534 /etc/gatus
+cp config.yaml /etc/gatus/config.yaml
+cp sync-gatus-config.sh /usr/local/bin/sync-gatus-config.sh
+chmod +x /usr/local/bin/sync-gatus-config.sh
+/usr/local/bin/sync-gatus-config.sh >> /var/log/gatus-sync.log 2>&1
+echo "*/15 * * * * /usr/local/bin/sync-gatus-config.sh >> /var/log/gatus-sync.log 2>&1" | crontab -
 
 docker build -t gatus:1.1 .
-docker run -d --name gatus-2 -p 80:8080 gatus:1.1
+
+
+docker run -d --name gatus -p 80:8080 -v /etc/gatus:/config -v /var/lib/gatus:/data gatus:1.1
 
