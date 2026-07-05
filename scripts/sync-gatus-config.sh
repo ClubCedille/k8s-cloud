@@ -7,7 +7,8 @@ TMP_PATH="/tmp/config.yaml"
 CONTAINER_NAME="gatus"
 
 
-git archive --remote="$REPO" main "$FILE" | tar -xO > "$TMP_PATH" 2>/dev/null
+# Plus besoin de dossier local !
+curl -s -o "$TMP_PATH" "https://raw.githubusercontent.com/ClubCedille/k8s-cloud/main/scripts/config.yaml"
 
 
 if [ -s "$TMP_PATH" ]; then
