@@ -7,7 +7,7 @@ TMP_PATH="/tmp/config.yaml"
 CONTAINER_NAME="gatus"
 
 
-# Plus besoin de dossier local !
+
 curl -s -o "$TMP_PATH" "https://raw.githubusercontent.com/ClubCedille/k8s-cloud/main/scripts/config.yaml"
 
 

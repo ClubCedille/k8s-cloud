@@ -183,12 +183,7 @@ endpoints:
     conditions:
       - "[STATUS] == 200"
       - "[CERTIFICATE_EXPIRATION] > 48h"
-    alerts:
-      - type: discord
-        failure-threshold: 3   
-        success-threshold: 2   
-        send-on-resolved: true 
-        description: "Evovelo down"
+ 
 
   - name: evovelo-prodv2-cedille-club
     group: production
@@ -197,6 +192,12 @@ endpoints:
     conditions:
       - "[STATUS] == 200"
       - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts:
+      - type: discord
+        failure-threshold: 3   
+        success-threshold: 2   
+        send-on-resolved: true 
+        description: "Evovelo down"
 
   - name: exutoire-ca
     group: production
