@@ -434,14 +434,6 @@ endpoints:
       - "[STATUS] == 200"
       - "[CERTIFICATE_EXPIRATION] > 48h"
 
-  - name: planifets-clubapplets-ca
-    group: production
-    url: "https://planifets.clubapplets.ca/.well-known/acme-challenge/L0CYZV8Mr-UgSeaxK10zPXWzY4g-atul71KYM3-3gk4"
-    interval: 5m
-    conditions:
-      - "[STATUS] == 200"
-      - "[CERTIFICATE_EXPIRATION] > 48h"
-
   - name: planifets-dev-cedille-club
     group: staging
     url: "https://planifets.dev.cedille.club/"
