@@ -466,14 +466,6 @@ endpoints:
       - "[STATUS] == 200"
       - "[CERTIFICATE_EXPIRATION] > 48h"
 
-  - name: planka-etsmtl-club
-    group: shared
-    url: "https://planka.etsmtl.club/.well-known/acme-challenge/9x6Cgz4Htp8UZarnWCECevoOgMeheZneexDV-GYB8EE"
-    interval: 5m
-    conditions:
-      - "[STATUS] == 200"
-      - "[CERTIFICATE_EXPIRATION] > 48h"
-
   - name: pr-241-cedille-prodv2-cedille-club
     group: production
     url: "https://pr-241.cedille.prodv2.cedille.club/"
