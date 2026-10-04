@@ -149,7 +149,7 @@ storage:
 alerting:
   discord:
     enabled: true
-    webhook-url: "${DISCORD_WEBHOOK_URL}"
+    webhook-url: "${{DISCORD_WEBHOOK_URL}}"
 
 web:
   port: 8080
