@@ -32,8 +32,8 @@ jobs:
         env:
           KUBE64: ${{ secrets.KUBE64 }}
         run: |
-          chmod +x scripts/generate-gatus-config.sh
-          OUTPUT_FILE=scripts/config.yaml scripts/generate-gatus-config.sh
+          chmod +x scripts/generate-gatus-config.py
+          OUTPUT_FILE=scripts/config.yaml python3 scripts/generate-gatus-config.py
 
       - name: Validate Gatus configuration
         run: |
